@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import  APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from .permissions import *
 from .models import UserProfile
 from .serializers import HelloSerializer, UserProfileSerializer
 # Create your views here.
@@ -93,3 +95,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     """handles creating, rerieving and updating profiles."""
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (UpdateOwnProfile,)
